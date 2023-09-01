@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.app {
+  display: flex;
+}
+
+.door {
+  background-color: rgb(92, 92, 92);
+  width: 2rem;
+  height: 3rem;
+}
+
+.panelButton {
+  margin: 16px;
+  background-color: aqua;
+  width: 25%;
+  border-radius: 50%;
+}
+
+.panel {
+  display: flex;
+  width: 25%;
+  flex-wrap: wrap;
+}
+
+.open {
+  background-color: green;
+}

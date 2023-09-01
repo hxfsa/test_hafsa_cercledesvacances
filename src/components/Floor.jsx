@@ -30,6 +30,7 @@ export const Floor = ({
           type="radio"
           onClick={() => handleBuildingButton(floor)}
           checked={isAskedBuildingFloor}
+          onChange={()=>null}
         ></input>
       </td>
     </tr>

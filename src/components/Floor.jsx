@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
 import { ElevatorDoor } from "./ElevatorDoor";
+import { useEffect } from "react";
 
 export const Floor = ({
   floor,
@@ -8,21 +8,23 @@ export const Floor = ({
   isHere2,
   handleBuildingButton,
   isAskedBuildingFloor,
+  isLightOn1,
+  isLightOn2,
+  isDoorOpen1,
+  isDoorOpen2
 }) => {
-  const [isFirstLightOn, setIsFirstLightOn] = useState(isHere1);
-  const [isSecondLightOn, setIsSecondLightOn] = useState(isHere2);
 
   return (
     <tr className="pb-2">
       <td>{floor}</td>
       <td className="flex">
         <ElevatorDoor
-          isLightOn={isFirstLightOn}
-          isOpen={isHere1}
+          isLightOn={isLightOn1}
+          isOpen={isDoorOpen1}
         />
         <ElevatorDoor
-          isLightOn={isSecondLightOn}
-          isOpen={isHere2}
+          isLightOn={isLightOn2}
+          isOpen={isDoorOpen2}
         />
       </td>
       <td>

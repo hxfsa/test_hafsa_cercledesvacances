@@ -1,6 +1,7 @@
 // import React, { useState } from "react";
 import { Floor } from "./Floor";
 import { useEffect, useState, useCallback } from "react";
+import { Panel } from "./Panel";
 
 const floors = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5];
 
@@ -75,62 +76,128 @@ export const Building = () => {
     }
   }, [askedFloors2]);
 
-  const goUp = useCallback((nextStop, currentFloor, setCurrentFloor, setIsMoving, askedFloors, setAskedFloors) => {
-    setIsMoving("up");
-    let nextFloor = currentFloor + 1
-    const interval = setInterval(() => {
-      if (nextFloor < nextStop + 1) {
-        setCurrentFloor(nextFloor)
-        nextFloor++
-      } else {
-        setIsMoving(undefined)
-        const newAskedFloors = askedFloors.filter(floor => floor !== nextStop)
-        setAskedFloors(newAskedFloors)
-        // remove askedBuildingFloor visited
-        const newAskedBuildingFloors = askedBuildingFloors.filter(floor => floor !== nextStop)
-        setAskedBuildingFloors(newAskedBuildingFloors)
-        clearInterval(interval)
-      }
-    }, 1000)
-  }, [currentFloor1, currentFloor2, askedBuildingFloors])
+  const goUp = useCallback(
+    (
+      nextStop,
+      currentFloor,
+      setCurrentFloor,
+      setIsMoving,
+      askedFloors,
+      setAskedFloors
+    ) => {
+      setIsMoving("up");
+      let nextFloor = currentFloor + 1;
+      const interval = setInterval(() => {
+        if (nextFloor < nextStop + 1) {
+          setCurrentFloor(nextFloor);
+          nextFloor++;
+        } else {
+          setIsMoving(undefined);
+          const newAskedFloors = askedFloors.filter(
+            (floor) => floor !== nextStop
+          );
+          setAskedFloors(newAskedFloors);
+          // remove askedBuildingFloor visited
+          const newAskedBuildingFloors = askedBuildingFloors.filter(
+            (floor) => floor !== nextStop
+          );
+          setAskedBuildingFloors(newAskedBuildingFloors);
+          clearInterval(interval);
+        }
+      }, 1000);
+    },
+    [currentFloor1, currentFloor2, askedBuildingFloors]
+  );
 
-  const goDown = useCallback((nextStop, currentFloor, setCurrentFloor, setIsMoving, askedFloors, setAskedFloors) => {
-    setIsMoving("down");
-    let nextFloor = currentFloor - 1
-    const interval = setInterval(() => {
-      if (nextFloor > nextStop - 1) {
-        setCurrentFloor(nextFloor)
-        nextFloor--
-      } else {
-        setIsMoving(undefined)
-        const newAskedFloors = askedFloors.filter(floor => floor !== nextStop)
-        setAskedFloors(newAskedFloors)
-        // remove askedBuildingFloor visited
-        const newAskedBuildingFloors = askedBuildingFloors.filter(floor => floor !== nextStop)
-        setAskedBuildingFloors(newAskedBuildingFloors)
-        clearInterval(interval)
-      }
-    }, 1000)
-  }, [currentFloor1, currentFloor2, askedBuildingFloors])
+  const goDown = useCallback(
+    (
+      nextStop,
+      currentFloor,
+      setCurrentFloor,
+      setIsMoving,
+      askedFloors,
+      setAskedFloors
+    ) => {
+      setIsMoving("down");
+      let nextFloor = currentFloor - 1;
+      const interval = setInterval(() => {
+        if (nextFloor > nextStop - 1) {
+          setCurrentFloor(nextFloor);
+          nextFloor--;
+        } else {
+          setIsMoving(undefined);
+          const newAskedFloors = askedFloors.filter(
+            (floor) => floor !== nextStop
+          );
+          setAskedFloors(newAskedFloors);
+          // remove askedBuildingFloor visited
+          const newAskedBuildingFloors = askedBuildingFloors.filter(
+            (floor) => floor !== nextStop
+          );
+          setAskedBuildingFloors(newAskedBuildingFloors);
+          clearInterval(interval);
+        }
+      }, 1000);
+    },
+    [currentFloor1, currentFloor2, askedBuildingFloors]
+  );
 
   // deplacement des ascenseurs
-  const moveElevator = useCallback((elevatorNumber, nextStop) => {
-    if (elevatorNumber === 1) {
-      setIsDoorOpen1(false);
-      if (nextStop > currentFloor1) {
-        goUp(nextStop, currentFloor1, setCurrentFloor1, setIsMoving1, askedFloors1, setAskedFloors1)
-      } else {
-        goDown(nextStop, currentFloor1, setCurrentFloor1, setIsMoving1, askedFloors1, setAskedFloors1)
+  const moveElevator = useCallback(
+    (elevatorNumber, nextStop) => {
+      if (elevatorNumber === 1) {
+        setIsDoorOpen1(false);
+        if (nextStop > currentFloor1) {
+          goUp(
+            nextStop,
+            currentFloor1,
+            setCurrentFloor1,
+            setIsMoving1,
+            askedFloors1,
+            setAskedFloors1
+          );
+        } else {
+          goDown(
+            nextStop,
+            currentFloor1,
+            setCurrentFloor1,
+            setIsMoving1,
+            askedFloors1,
+            setAskedFloors1
+          );
+        }
+      } else if (elevatorNumber === 2) {
+        setIsDoorOpen2(false);
+        if (nextStop > currentFloor2) {
+          goUp(
+            nextStop,
+            currentFloor2,
+            setCurrentFloor2,
+            setIsMoving2,
+            askedFloors2,
+            setAskedFloors2
+          );
+        } else {
+          goDown(
+            nextStop,
+            currentFloor2,
+            setCurrentFloor2,
+            setIsMoving2,
+            askedFloors2,
+            setAskedFloors2
+          );
+        }
       }
-    } else if (elevatorNumber === 2) {
-      setIsDoorOpen2(false);
-      if (nextStop > currentFloor2) {
-        goUp(nextStop, currentFloor2, setCurrentFloor2, setIsMoving2, askedFloors2, setAskedFloors2)
-      } else {
-        goDown(nextStop, currentFloor2, setCurrentFloor2, setIsMoving2, askedFloors2, setAskedFloors2)
-      }
-    }
-  }, [askedFloors1, askedFloors2, currentFloor1, currentFloor2, nextStop1, nextStop2]);
+    },
+    [
+      askedFloors1,
+      askedFloors2,
+      currentFloor1,
+      currentFloor2,
+      nextStop1,
+      nextStop2,
+    ]
+  );
 
   useEffect(() => {
     if (nextStop1 && nextStop1 !== currentFloor1) {
@@ -146,6 +213,20 @@ export const Building = () => {
 
   return (
     <table className="building">
+      <Panel
+        floors={[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]}
+        left
+        askedFloors={askedFloors1}
+        setAskedFloors={setAskedFloors1}
+        isMoving={isMoving1}
+      />
+      <Panel
+        floors={[9, 8, 6, 4, 2, 0, -1, -2, -3, -4, -5]}
+        right
+        askedFloors={askedFloors2}
+        setAskedFloors={setAskedFloors2}
+        isMoving={isMoving2}
+      />
       <tbody>
         {floors.map((floor, key) => {
           const isHere1 = currentFloor1 === floor;
